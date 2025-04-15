@@ -145,7 +145,7 @@ Base path: `/api/posts`
 For any inquiries or feedback, feel free to reach out:
 
 - **Email:** [your-email@example.com](mailto:sankalpagarwal8057@example.com)  
-- **LinkedIn:** [your-linkedin-profile]([https://your-linkedin-profile](https://www.linkedin.com/in/sankalp-agarwal-2b61ab253/))
+- **LinkedIn:** [your-linkedin-profile]((https://www.linkedin.com/in/sankalp-agarwal-2b61ab253/))
 
 ---
 
