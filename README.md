@@ -133,7 +133,7 @@ Base path: `/api/posts`
 
 ## 🚀 Usage
 
-1. Open your browser and go to: [http://localhost:3000](http://localhost:8084)
+1. Open your browser and go to: [http://localhost:8084](http://localhost:8084)
 2. Register a new user or log in with existing credentials.
 3. Create, like, comment, and explore posts from other users.
 4. Visit user profiles and follow/unfollow them.
@@ -144,8 +144,8 @@ Base path: `/api/posts`
 
 For any inquiries or feedback, feel free to reach out:
 
-- **Email:** [your-email@example.com](mailto:sankalpagarwal8057@example.com)  
-- **LinkedIn:** [your-linkedin-profile]((https://www.linkedin.com/in/sankalp-agarwal-2b61ab253/))
+- **Email:** [sankalpagarwal8057@example.com](mailto:sankalpagarwal8057@example.com)  
+- **LinkedIn:** [https://www.linkedin.com/in/sankalp-agarwal-2b61ab253/]((https://www.linkedin.com/in/sankalp-agarwal-2b61ab253/))
 
 ---
 
