@@ -1,0 +1,13 @@
+import isAuthenticated from "../config/authentication.js";
+import { logOut,Login, Register,bookmark, getMyProfile, getOtherUsers, follow, unfollow} from "../controllers/userController.js";
+import express from "express";
+const router = express.Router();
+router.route("/register").post(Register);
+router.route("/login").post(Login);
+router.route("/logOut").get(logOut);
+router.route("/bookmark/:id").put(isAuthenticated,bookmark);
+router.route("/profile/:id").get(isAuthenticated,getMyProfile);
+router.route("/otheruser/:id").get(isAuthenticated,getOtherUsers);
+router.route("/follow/:id").post(isAuthenticated,follow);
+router.route("/unfollow/:id").post(isAuthenticated,unfollow);
+export default router;
