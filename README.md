@@ -1,2 +1,176 @@
-# Social_Net
-**Social Net** is a full-stack social media web application where users can connect, share posts, like, and comment in real time. Built with React, Node.js, Express, and MongoDB, Social Net offers a seamless and interactive user experience designed for modern social networking and digital community building.
+# 🌐 Social Net
+
+**Social Net** is a modern, full-stack social media web application that enables users to connect, share, and interact in real time. Users can sign up, create posts, follow others, like, and comment—all within a responsive and intuitive interface. Built using the powerful MERN (MongoDB, Express, React, Node.js) stack, Social Net delivers both performance and scalability.
+
+---
+
+## 📸 Demo
+
+> _Coming Soon: Hosted demo link_
+
+---
+
+## ✨ Features
+
+- 🔐 User Authentication using JWT
+- 📝 Create, Edit, and Delete Posts
+- ❤️ Like and Comment on Posts
+- 👥 Follow/Unfollow Users
+- 🧑‍💼 User Profiles with Bio and Activity
+- 🔔 Real-time Notifications (Planned)
+- 📱 Responsive Design (Mobile Friendly)
+
+---
+
+## 🛠️ Tech Stack
+
+### 🚀 Frontend
+- React.js
+- React Router
+- Axios
+- Context API
+- CSS/Flexbox
+
+### 🔧 Backend
+- Node.js
+- Express.js
+- MongoDB
+- Mongoose
+- bcrypt.js
+- JSON Web Tokens (JWT)
+
+---
+
+## 📁 Project Structure
+
+SocialNet/ ├── frontEnd/ │ ├── public/ │ └── src/ │ ├── components/ │ ├── pages/ │ └── App.js ├── backEnd/ │ ├── models/ │ ├── routes/ │ ├── controllers/ │ └── server.js └── README.md
+
+
+---
+
+## ⚙️ Installation
+
+### Prerequisites
+
+Make sure you have the following installed:
+
+- Node.js (>=14.x)
+- MongoDB (local or cloud-based like Atlas)
+- npm or yarn
+
+### Clone the Repository
+
+```bash
+git clone https://github.com/yourusername/social-net.git
+cd social-net
+
+---
+
+## ⚙️ Installation
+
+### Prerequisites
+
+Make sure you have the following installed:
+
+- Node.js (>=14.x)
+- MongoDB (local or cloud-based like Atlas)
+- npm or yarn
+
+### Clone the Repository
+
+```bash
+git clone https://github.com/yourusername/social-net.git
+cd social-net
+
+backEnd/ ├── controllers/ # Business logic for routes │ ├── authController.js │ ├── postController.js │ └── userController.js ├── models/ # Mongoose schemas │ ├── Post.js │ └── User.js ├── routes/ # Express route handlers │ ├── auth.js │ ├── posts.js │ └── users.js ├── middleware/ # JWT & auth middleware (if used) │ └── verifyToken.js ├── .env # Environment variables ├── server.js # Entry point of backend └── package.json
+
+
+---
+
+## 🔐 Authentication
+
+Authentication is handled using **JWT (JSON Web Tokens)** and **bcrypt.js** for password hashing.
+
+### 🔄 Auth Flow
+
+- **Register:** `POST /api/auth/register`
+- **Login:** `POST /api/auth/login`
+
+**Middleware** (`verifyToken.js`) protects routes that require authentication.
+
+---
+
+## 🧑 User Routes
+
+Base path: `/api/users`
+
+| Route                         | Method | Description               |
+|------------------------------|--------|---------------------------|
+| `/api/users/:id`             | GET    | Get user profile          |
+| `/api/users/:id`             | PUT    | Update user details       |
+| `/api/users/:id`             | DELETE | Delete user               |
+| `/api/users/:id/follow`      | PUT    | Follow another user       |
+| `/api/users/:id/unfollow`    | PUT    | Unfollow another user     |
+
+---
+
+## 📝 Post Routes
+
+Base path: `/api/posts`
+
+| Route                          | Method | Description                    |
+|-------------------------------|--------|--------------------------------|
+| `/api/posts`                  | POST   | Create a new post              |
+| `/api/posts/:id`              | PUT    | Update a post                  |
+| `/api/posts/:id`              | DELETE | Delete a post                  |
+| `/api/posts/:id/like`         | PUT    | Like/unlike a post             |
+| `/api/posts/:id`              | GET    | Get single post by ID          |
+| `/api/posts/profile/:username`| GET    | Get all posts from a user      |
+| `/api/posts/timeline/:userId`| GET    | Get timeline posts             |
+
+---
+
+## 🧠 Controllers
+
+- **authController.js** – Handles login & register logic
+- **userController.js** – Deals with user CRUD & follow/unfollow
+- **postController.js** – Manages post creation, likes, deletions
+
+---
+
+## 🔧 Setup & Run
+
+### Prerequisites
+
+- Node.js (v14+ recommended)
+- MongoDB (Local or Atlas)
+
+### Install Dependencies
+
+```bash
+cd backEnd
+npm install
+## 🚀 Usage
+
+1. Open your browser and go to: [http://localhost:3000](http://localhost:3000)
+2. Register a new user or log in with existing credentials.
+3. Create, like, comment, and explore posts from other users.
+4. Visit user profiles and follow/unfollow them.
+
+---
+
+## 📬 Contact
+
+For any inquiries or feedback, feel free to reach out:
+
+- **Email:** [your-email@example.com](mailto:your-email@example.com)  
+- **LinkedIn:** [your-linkedin-profile](https://your-linkedin-profile)
+
+---
+
+## 🙏 Acknowledgements
+
+- [React](https://reactjs.org/)
+- [MongoDB](https://www.mongodb.com/)
+- [Node.js](https://nodejs.org/)
+- [Express](https://expressjs.com/)
