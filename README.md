@@ -4,12 +4,6 @@
 
 ---
 
-## 📸 Demo
-
-> _Coming Soon: Hosted demo link_
-
----
-
 ## ✨ Features
 
 - 🔐 User Authentication using JWT
@@ -43,7 +37,7 @@
 
 ## 📁 Project Structure
 
-SocialNet/ ├── frontEnd/ │ ├── public/ │ └── src/ │ ├── components/ │ ├── pages/ │ └── App.js ├── backEnd/ │ ├── models/ │ ├── routes/ │ ├── controllers/ │ └── server.js └── README.md
+ ``` SocialNet/ ├── frontEnd/ │ ├── public/ │ └── src/ │ ├── components/ │ ├── pages/ │ └── App.js ├── backEnd/ │ ├── models/ │ ├── routes/ │ ├── controllers/ │ └── server.js └── README.md ```
 
 
 ---
