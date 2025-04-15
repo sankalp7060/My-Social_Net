@@ -37,7 +37,19 @@
 
 ## 📁 Project Structure
 
- ``` SocialNet/ ├── frontEnd/ │ ├── public/ │ └── src/ │ ├── components/ │ ├── pages/ │ └── App.js ├── backEnd/ │ ├── models/ │ ├── routes/ │ ├── controllers/ │ └── server.js └── README.md ```
+ SocialNet/ 
+ ├── frontEnd/ 
+ │ ├── public/ 
+ │ └── src/ 
+ │ ├── components/ 
+ │ ├── pages/ 
+ │ └── App.js 
+ ├── backEnd/ 
+ │ ├── models/ 
+ │ ├── routes/ 
+ │ ├── controllers/ 
+ │ └── server.js 
+ └── README.md
 
 
 ---
@@ -52,12 +64,6 @@ Make sure you have the following installed:
 - MongoDB (local or cloud-based like Atlas)
 - npm or yarn
 
-### Clone the Repository
-
-```bash
-git clone https://github.com/yourusername/social-net.git
-cd social-net
-
 ---
 
 ## ⚙️ Installation
@@ -69,30 +75,14 @@ Make sure you have the following installed:
 - Node.js (>=14.x)
 - MongoDB (local or cloud-based like Atlas)
 - npm or yarn
-
-### Clone the Repository
-
-```bash
-git clone https://github.com/yourusername/social-net.git
-cd social-net
 
 backEnd/ ├── controllers/ # Business logic for routes │ ├── authController.js │ ├── postController.js │ └── userController.js ├── models/ # Mongoose schemas │ ├── Post.js │ └── User.js ├── routes/ # Express route handlers │ ├── auth.js │ ├── posts.js │ └── users.js ├── middleware/ # JWT & auth middleware (if used) │ └── verifyToken.js ├── .env # Environment variables ├── server.js # Entry point of backend └── package.json
-
 
 ---
 
 ## 🔐 Authentication
 
 Authentication is handled using **JWT (JSON Web Tokens)** and **bcrypt.js** for password hashing.
-
-### 🔄 Auth Flow
-
-- **Register:** `POST /api/auth/register`
-- **Login:** `POST /api/auth/login`
-
-**Middleware** (`verifyToken.js`) protects routes that require authentication.
-
----
 
 ## 🧑 User Routes
 
@@ -141,9 +131,6 @@ Base path: `/api/posts`
 
 ### Install Dependencies
 
-```bash
-cd backEnd
-npm install
 ## 🚀 Usage
 
 1. Open your browser and go to: [http://localhost:3000](http://localhost:3000)
