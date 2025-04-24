@@ -9,9 +9,9 @@ const RightBar = ({ otherUsers }) => {
 
   useEffect(() => {
     if (!searchTerm.trim()) {
-      setFilteredUsers(otherUsers); 
+      setFilteredUsers(otherUsers);
     } else {
-      const lowerSearch = searchTerm.toLowerCase().replace(/^@/, ''); 
+      const lowerSearch = searchTerm.toLowerCase().replace(/^@/, "");
       const filtered = otherUsers.filter(
         (user) =>
           user?.name?.toLowerCase().includes(lowerSearch) ||
@@ -21,8 +21,8 @@ const RightBar = ({ otherUsers }) => {
     }
   }, [searchTerm, otherUsers]);
   const formatUsername = (username) => {
-    if (!username) return '';
-    return username.startsWith('@') ? username : `@${username}`;
+    if (!username) return "";
+    return username.startsWith("@") ? username : `@${username}`;
   };
 
   return (
@@ -47,7 +47,10 @@ const RightBar = ({ otherUsers }) => {
             >
               <div className="flex">
                 <Avatar
-                  src="https://icon-library.com/images/avatar-icon-images/avatar-icon-images-4.jpg"
+                  src={
+                    user?.avatar ||
+                    "https://icon-library.com/images/avatar-icon-images/avatar-icon-images-4.jpg"
+                  }
                   size="40"
                   round={true}
                 />
