@@ -30,7 +30,7 @@ const LeftBar = () => {
   };
 
   return (
-    <div className="w-[20%] p-3">
+    <div className="w-[20%] p-3 sticky top-0 h-[100vh] overflow-y-auto">
       <div className="flex items-center mb-4">
         <img width="50px" src="/titlelogo2.png" alt="Main logo" />
         <h1 className="ml-2 text-3xl font-bold text-[#048193]">Velfy</h1>
@@ -61,7 +61,6 @@ const LeftBar = () => {
           <h1 className="font-bold text-lg ml-2">Logout</h1>
         </div>
       </nav>
-      <button className="mt-4 px-4 py-2 bg-[#048193] rounded-full w-full text-white font-bold">Post</button>
     </div>
   );
 };

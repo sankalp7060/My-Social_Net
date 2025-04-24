@@ -1,24 +1,22 @@
-import { createSlice } from "@reduxjs/toolkit";
-
+import {createSlice} from "@reduxjs/toolkit";
 const postSlice = createSlice({
-  name: "post",
-  initialState: {
-    post: null,
-    refresh: false,
-    isActive: true,
-  },
-  reducers: {
-    getAllPost: (state, action) => {
-      state.post = action.payload;
+    name:"post",
+    initialState:{
+        posts:null,
+        refresh:false,
+        isActive:true
     },
-    getRefresh: (state) => {
-      state.refresh = !state.refresh;
-    },
-    getIsActive: (state, action) => {
-      state.isActive = action.payload;
-    },
-  },
+    reducers:{
+        getAllPost:(state,action)=>{
+            state.posts = action.payload;
+        },
+        getRefresh:(state)=>{
+            state.refresh = !state.refresh;
+        },
+        getIsActive:(state,action)=>{
+            state.isActive = action.payload;
+        }
+    }
 });
-
-export const { getAllPost, getRefresh, getIsActive } = postSlice.actions;
+export const {getAllPost,getRefresh,getIsActive} = postSlice.actions;
 export default postSlice.reducer;

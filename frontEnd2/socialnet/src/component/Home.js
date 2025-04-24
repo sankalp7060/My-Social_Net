@@ -15,10 +15,8 @@ const Home = () => {
   }, [user,navigate]);
   useOtherUser(user?._id);
   useGetPost(user?._id);
-  console.log(otherUsers);
   return (
     <div className="flex justify-between w-[80%] mx-auto">
-      {" "}
       <LeftBar /> 
       <Outlet /> 
       <RightBar otherUsers={otherUsers} />

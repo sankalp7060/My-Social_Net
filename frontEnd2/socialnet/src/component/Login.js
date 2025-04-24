@@ -10,8 +10,8 @@ import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
 const Login = () => {
   const [isLogin, setIsLogin] = useState(true);
   const [name, setName] = useState("");
-  const [username, setUserName] = useState("");
-  const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
+  const [emailOrUsername, setEmailOrUsername] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -20,47 +20,84 @@ const Login = () => {
 
   const submitHandler = async (e) => {
     e.preventDefault();
+    if (isLogin && (!emailOrUsername || !password)) {
+      toast.error("Email/Username and password are required");
+      return;
+    }
+    if (!isLogin && (!name || !username || !emailOrUsername || !password)) {
+      toast.error("All fields are required");
+      return;
+    }
+
     setLoading(true);
-    if (isLogin) {
-      try {
-        const res = await axios.post(`${USER_API_END_POINT}/login`, { email, password }, {
-          headers: {
-            'Content-Type': "application/json"
-          },
-          withCredentials: true
-        }); 
-        if(res.data.success){
-          dispatch(getUser(res?.data?.user));
+
+    try {
+      if (isLogin) {
+        const res = await axios.post(
+          `${USER_API_END_POINT}/login`,
+          { emailOrUsername, password },
+          {
+            headers: {
+              'Content-Type': "application/json"
+            },
+            withCredentials: true
+          }
+        );
+        
+        if (res.data.success) {
+          dispatch(getUser(res.data.user));
           navigate("/");
           toast.success(res.data.message);
         }
-      } catch (error) {
-        toast.success(error.response.data.message);
-        console.log(error);
-      }
-    } else {
-      try {
-        const res = await axios.post(`${USER_API_END_POINT}/register`, { name, username, email, password }, {
-          headers: {
-            'Content-Type': "application/json"
-          },
-          withCredentials: true
-        }); 
-        if(res.data.success){
+      } else {
+        const res = await axios.post(
+          `${USER_API_END_POINT}/register`,
+          { name, username, email: emailOrUsername, password },
+          {
+            headers: {
+              'Content-Type': "application/json"
+            },
+            withCredentials: true
+          }
+        );
+        
+        if (res.data.success) {
           setIsLogin(true);
           toast.success(res.data.message);
+          setName("");
+          setUsername("");
+          setEmailOrUsername("");
+          setPassword("");
         }
-      } catch (error) {
-        toast.success(error.response.data.message);
-        console.log(error);
       }
+    } catch (error) {
+      let errorMessage = isLogin ? "Login failed" : "Registration failed";
+      
+      if (error.response) {
+        errorMessage = error.response.data?.message || 
+                     (error.response.status === 401 ? "Invalid credentials" : errorMessage);
+      } else if (error.request) {
+        errorMessage = "No response from server. Please try again.";
+      }
+      
+      toast.error(errorMessage, {
+        duration: 4000,
+        position: 'top-center'
+      });
+      
+      console.error("Auth error:", error);
+    } finally {
+      setLoading(false);
     }
-    setLoading(false);
-  }
+  };
 
-  const loginhandler = useCallback(() => {
+  const toggleAuthMode = useCallback(() => {
     setIsLogin((prev) => !prev);
-  },[]);  
+    setName("");
+    setUsername("");
+    setEmailOrUsername("");
+    setPassword("");
+  }, []);
 
   return (
     <div className="w-screen h-screen flex items-center justify-center ml-[-50px]">
@@ -86,22 +123,25 @@ const Login = () => {
                   type="text"
                   placeholder="Name"
                   className="outline-[#048193] border-2 border-[#1C8D9F] px-3 py-2 rounded-full my-1 font-semibold"
+                  required
                 />
                 <input
                   value={username}
-                  onChange={(e) => setUserName(e.target.value)}
+                  onChange={(e) => setUsername(e.target.value)}
                   type="text"
                   placeholder="Username"
                   className="outline-[#048193] border-2 border-[#1C8D9F] px-3 py-2 rounded-full my-1 font-semibold"
+                  required
                 />
               </>
             )}
             <input
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              type="email"
-              placeholder="Email"
+              value={emailOrUsername}
+              onChange={(e) => setEmailOrUsername(e.target.value)}
+              type={isLogin ? "text" : "email"}
+              placeholder={isLogin ? "Email or Username" : "Email"}
               className="outline-[#048193] border-2 border-[#1C8D9F] px-3 py-2 rounded-full my-1 font-semibold"
+              required
             />
             <div className="relative">
               <input
@@ -110,29 +150,30 @@ const Login = () => {
                 type={showPassword ? "text" : "password"}
                 placeholder="Password"
                 className="outline-[#048193] border-2 border-[#1C8D9F] px-3 py-2 rounded-full my-1 font-semibold w-full pr-10"
+                required
+                minLength={6}
               />
               <span
                 className="absolute right-3 top-4 cursor-pointer text-[#0A5F70]"
                 onClick={() => setShowPassword(!showPassword)}
               >
-                {showPassword ? (
-                  <FaRegEyeSlash size={22} />
-                ) : (
-                  <FaRegEye size={22} />
-                )}
+                {showPassword ? <FaRegEyeSlash size={22} /> : <FaRegEye size={22} />}
               </span>
             </div>
 
-            <button className="bg-[#0A5F70] my-4 py-2 border-none rounded-full text-lg text-white font-semibold" disabled={loading}>
-            {loading ? "Processing..." : isLogin ? "Sign In" : "Create Account"}
+            <button
+              type="submit"
+              className="bg-[#0A5F70] my-4 py-2 border-none rounded-full text-lg text-white font-semibold hover:bg-[#084a58] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+              disabled={loading}
+            >
+              {loading ? "Processing..." : isLogin ? "Sign In" : "Create Account"}
             </button>
+            
             <h1 className="ml-1">
-              {isLogin
-                ? "Do not have an account? "
-                : "Already have an account? "}
+              {isLogin ? "Don't have an account? " : "Already have an account? "}
               <span
-                onClick={loginhandler}
-                className="font-bold text-[#0A5F70] cursor-pointer"
+                onClick={toggleAuthMode}
+                className="font-bold text-[#0A5F70] cursor-pointer hover:underline"
               >
                 {isLogin ? "Sign Up" : "Sign In"}
               </span>

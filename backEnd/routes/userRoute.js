@@ -1,13 +1,29 @@
-import isAuthenticated from "../config/authentication.js";
-import { logOut,Login, Register,bookmark, getMyProfile, getOtherUsers, follow, unfollow} from "../controllers/userController.js";
 import express from "express";
+import isAuthenticated from "../config/authentication.js";
+import {
+  Register,
+  login,
+  logOut,
+  bookmark,
+  getMyProfile,
+  getOtherUsers,
+  follow,
+  unfollow,
+  searchUsers,
+  updateProfile,
+} from "../controllers/userController.js";
+
 const router = express.Router();
-router.route("/register").post(Register);
-router.route("/login").post(Login);
-router.route("/logOut").get(logOut);
-router.route("/bookmark/:id").put(isAuthenticated,bookmark);
-router.route("/profile/:id").get(isAuthenticated,getMyProfile);
-router.route("/otheruser/:id").get(isAuthenticated,getOtherUsers);
-router.route("/follow/:id").post(isAuthenticated,follow);
-router.route("/unfollow/:id").post(isAuthenticated,unfollow);
+router.post("/register", Register);
+router.post("/login", login);
+router.get("/logout", logOut);
+
+router.get("/profile/:id", isAuthenticated, getMyProfile);
+router.get("/otheruser/:id", isAuthenticated, getOtherUsers);
+router.get("/search", isAuthenticated, searchUsers);
+router.put("/update/:id", isAuthenticated, updateProfile);
+router.post("/follow/:id", isAuthenticated, follow);
+router.post("/unfollow/:id", isAuthenticated, unfollow);
+router.put("/bookmark/:id", isAuthenticated, bookmark);
+
 export default router;

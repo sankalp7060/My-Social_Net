@@ -1,16 +1,19 @@
 import React from "react";
-import CreatePost from "./CreatePost";
-import Post from "./Post";
 import { useSelector } from "react-redux";
+import FeedTabs from "./FeedTabs";
+import CreatePostInput from "./CreatePostInput";
+import Post from "./Post";
 
 const Feed = () => {
-  const { post } = useSelector((store) => store.post);
+  const { posts } = useSelector((store) => store.post);
+
   return (
     <div className="w-[50%] border border-gray-200">
+      <FeedTabs />
+      <CreatePostInput />
       <div>
-        <CreatePost />
-        {post?.map((post) => (
-          <Post key={post?._id} post={post}/>
+        {posts?.map((post) => (
+          <Post key={post?._id} post={post} />
         ))}
       </div>
     </div>

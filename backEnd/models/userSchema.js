@@ -19,6 +19,18 @@ const userSchema = new mongoose.Schema(
       required: true,
       unique: true,
     },
+    bio: {
+      type: String,
+      default: "",
+    },
+    avatar: {
+      type: String,
+      default: "",
+    },
+    banner: {
+      type: String,
+      default: "",
+    },
     followers: {
       type: Array,
       default: [],
@@ -34,4 +46,5 @@ const userSchema = new mongoose.Schema(
   },
   { timestamps: true }
 );
+
 export const User = mongoose.model("User", userSchema);

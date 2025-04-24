@@ -12,13 +12,13 @@ const useOtherUser = (id) => {
               const res = await axios.get(`${USER_API_END_POINT}/otheruser/${id}`,{
                   withCredentials:true
               });
-              dispatch(getOtherUsers(res.data.otherUsers));
+              dispatch(getOtherUsers(res.data.otherUser));
           } catch (error) {
               console.log(error);
           }
       }
       fetchOtherUsers();
-  },[id]);
+  },[dispatch,id]);
 };
 
 export default useOtherUser;

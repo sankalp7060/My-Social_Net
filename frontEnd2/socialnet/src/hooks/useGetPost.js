@@ -7,12 +7,12 @@ import { getAllPost } from "../redux/postSlice";
 const useGetPost = (id) => {
   const dispatch = useDispatch();
   const { refresh, isActive } = useSelector((store) => store.post);
-
-  axios.defaults.withCredentials = true;
   const fetchMyPost = async () => {
     try {
-      const res = await axios.get(`${POST_API_END_POINT}/allPost/${id}`);
-      dispatch(getAllPost(res.data.post));
+      const res = await axios.get(`${POST_API_END_POINT}/allPost/${id}`, {
+        withCredentials: true,
+      });
+      dispatch(getAllPost(res.data.posts));
     } catch (error) {
       console.error(error);
     }
@@ -20,21 +20,21 @@ const useGetPost = (id) => {
 
   const followingHandler = async () => {
     try {
+      axios.defaults.withCredentials = true;
       const res = await axios.get(`${POST_API_END_POINT}/followingPost/${id}`);
-      dispatch(getAllPost(res.data.post));
+      dispatch(getAllPost(res.data.posts));
     } catch (error) {
       console.error(error);
     }
   };
 
   useEffect(() => {
-    if (id) {
-      isActive ? fetchMyPost() : followingHandler();
+    if (isActive) {
+      fetchMyPost();
     }
     return () => {
-      dispatch(getAllPost([]));
+      followingHandler();
     };
-  }, [id, isActive, refresh, dispatch]);
+  }, [isActive, refresh]);
 };
-
 export default useGetPost;
