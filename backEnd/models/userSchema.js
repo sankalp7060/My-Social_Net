@@ -39,10 +39,10 @@ const userSchema = new mongoose.Schema(
       type: Array,
       default: [],
     },
-    bookmark: {
-      type: Array,
-      default: [],
-    },
+    bookmark: [{
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Post' 
+    }]
   },
   { timestamps: true }
 );

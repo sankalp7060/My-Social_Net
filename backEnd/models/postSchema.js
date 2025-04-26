@@ -30,16 +30,14 @@ const postSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    like: {
-      type: Array,
-      default: [],
-    },
-    dislike: {
-      type: Array,
-      default: [],
-    },
+    likes: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
+      },
+    ],
     userId: {
-      type: mongoose.Schema.ObjectId,
+      type: mongoose.Schema.Types.ObjectId,
       ref: "User",
       required: true,
     },
@@ -48,8 +46,12 @@ const postSchema = new mongoose.Schema(
       default: [],
     },
     comments: [commentSchema],
+    images: [
+      {
+        type: String,
+      },
+    ],
   },
   { timestamps: true }
 );
-
 export const Post = mongoose.model("Post", postSchema);

@@ -1,27 +1,52 @@
 import { Post } from "../models/postSchema.js";
 import { User } from "../models/userSchema.js";
-
+import mongoose from "mongoose";
+import cloudinary from 'cloudinary';
+cloudinary.v2.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET
+});
 export const createPost = async (req, res) => {
   try {
     const { description, id } = req.body;
-    if (!description || !id) {
+    const files = req.files?.images;
+    
+    if (!description && (!files || files.length === 0)) {
       return res.status(401).json({
-        message: "Fields are required.",
+        message: "Post cannot be empty.",
         success: false,
       });
     }
     const user = await User.findById(id).select("-password");
+    let imageUrls = [];
+    if (files) {
+      const uploadPromises = files.map(file => 
+        cloudinary.v2.uploader.upload(file.path, {
+          folder: 'social_media/posts'
+        })
+      );
+      const results = await Promise.all(uploadPromises);
+      imageUrls = results.map(result => result.secure_url);
+    }
+
     await Post.create({
       description,
       userId: id,
       userDetails: user,
+      images: imageUrls
     });
+
     return res.status(201).json({
       message: "Post created successfully.",
       success: true,
     });
   } catch (error) {
     console.log(error);
+    return res.status(500).json({
+      message: "Error creating post",
+      success: false
+    });
   }
 };
 export const dltPost = async (req, res) => {
@@ -39,22 +64,54 @@ export const dltPost = async (req, res) => {
 
 export const like = async (req, res) => {
   try {
-    const loggedInUserId = req.body.id;
+    const { id: userId } = req.body;
     const postId = req.params.id;
-    const post = await Post.findById(postId);
-    if (post.like.includes(loggedInUserId)) {
-      await Post.findByIdAndUpdate(postId, { $pull: { like: loggedInUserId } });
-      return res.status(200).json({
-        message: "User unliked your post.",
-      });
-    } else {
-      await Post.findByIdAndUpdate(postId, { $push: { like: loggedInUserId } });
-      return res.status(200).json({
-        message: "User liked your post.",
+
+    // Basic validation
+    if (!userId || !postId) {
+      return res.status(400).json({ 
+        success: false,
+        message: "Missing user ID or post ID" 
       });
     }
+
+    // Find the post
+    const post = await Post.findById(postId);
+    if (!post) {
+      return res.status(404).json({ 
+        success: false,
+        message: "Post not found" 
+      });
+    }
+
+    // Check if user already liked the post
+    const likeIndex = post.likes.indexOf(userId);
+    const isLiked = likeIndex !== -1;
+
+    // Update likes array
+    if (isLiked) {
+      post.likes.splice(likeIndex, 1); // Remove like
+    } else {
+      post.likes.push(userId); // Add like
+    }
+
+    // Save changes
+    const updatedPost = await post.save();
+
+    return res.status(200).json({
+      success: true,
+      liked: !isLiked,
+      likes: updatedPost.likes,
+      likeCount: updatedPost.likes.length
+    });
+
   } catch (error) {
-    console.log(error);
+    console.error("Like error:", error);
+    return res.status(500).json({
+      success: false,
+      message: "Internal server error",
+      error: error.message
+    });
   }
 };
 export const getAllPost = async (req, res) => {

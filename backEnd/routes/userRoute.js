@@ -11,6 +11,7 @@ import {
   unfollow,
   searchUsers,
   updateProfile,
+  getBookmarkedPosts
 } from "../controllers/userController.js";
 
 const router = express.Router();
@@ -25,5 +26,6 @@ router.put("/update/:id", isAuthenticated, updateProfile);
 router.post("/follow/:id", isAuthenticated, follow);
 router.post("/unfollow/:id", isAuthenticated, unfollow);
 router.put("/bookmark/:id", isAuthenticated, bookmark);
+router.get("/bookmarks", isAuthenticated, getBookmarkedPosts);
 
 export default router;

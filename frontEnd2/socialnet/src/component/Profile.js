@@ -23,11 +23,7 @@ const Profile = () => {
 
   const avatarInputRef = useRef(null);
   const bannerInputRef = useRef(null);
-
-  // Fetch profile data when id changes
   const { refreshProfile } = useGetProfile(id);
-
-  // Update local state when profile changes
   useEffect(() => {
     if (profile) {
       setName(profile.name || "");

@@ -100,24 +100,40 @@ export const bookmark = async (req, res) => {
   try {
     const loggedInUserId = req.body.id;
     const postId = req.params.id;
+
+    if (!loggedInUserId || !postId) {
+      return res.status(400).json({
+        message: "User ID and Post ID are required",
+      });
+    }
+
     const user = await User.findById(loggedInUserId);
+    if (!user) {
+      return res.status(404).json({
+        message: "User not found",
+      });
+    }
+
     if (user.bookmark.includes(postId)) {
       await User.findByIdAndUpdate(loggedInUserId, {
         $pull: { bookmark: postId },
       });
       return res.status(200).json({
-        message: "Removed from bookmarks.",
+        message: "Removed from bookmarks",
       });
     } else {
       await User.findByIdAndUpdate(loggedInUserId, {
         $push: { bookmark: postId },
       });
       return res.status(200).json({
-        message: "Saved to bookmarks.",
+        message: "Saved to bookmarks",
       });
     }
   } catch (error) {
-    console.log(error);
+    console.error("Bookmark error:", error);
+    return res.status(500).json({
+      message: "Internal server error",
+    });
   }
 };
 export const getMyProfile = async (req, res) => {
@@ -225,7 +241,6 @@ export const updateProfile = async (req, res) => {
     if (!name && !bio) {
       return res.status(400).json({ message: "Name or bio is required" });
     }
-
     const updatedUser = await User.findByIdAndUpdate(
       userId,
       {
@@ -238,11 +253,9 @@ export const updateProfile = async (req, res) => {
       },
       { new: true }
     ).select("-password");
-
     if (!updatedUser) {
       return res.status(404).json({ message: "User not found" });
     }
-
     res.status(200).json({
       message: "Profile updated successfully",
       user: updatedUser,
@@ -251,5 +264,43 @@ export const updateProfile = async (req, res) => {
   } catch (error) {
     console.error("Update profile error:", error);
     res.status(500).json({ message: "Internal server error" });
+  }
+};
+
+export const getBookmarkedPosts = async (req, res) => {
+  try {
+    console.log("Authenticated user ID:", req.user._id); 
+    
+    const user = await User.findById(req.user._id)
+      .populate({
+        path: 'bookmark',
+        populate: [{
+          path: 'userId',
+          select: 'name username avatar'
+        }, {
+          path: 'likes',
+          select: 'username'
+        }]
+      })
+      .lean(); 
+    if (!user) {
+      return res.status(404).json({ 
+        success: false,
+        message: "User not found" 
+      });
+    }
+
+    return res.status(200).json({
+      success: true,
+      bookmarkedPosts: user.bookmark || []
+    });
+
+  } catch (error) {
+    console.error("FULL ERROR STACK:", error);
+    return res.status(500).json({
+      success: false,
+      message: error.message,
+      stack: process.env.NODE_ENV === 'development' ? error.stack : undefined
+    });
   }
 };
