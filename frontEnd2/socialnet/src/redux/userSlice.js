@@ -37,23 +37,17 @@ const userSlice = createSlice({
     },
     updateProfileInfo: (state, action) => {
       const { name, bio, avatar, banner } = action.payload;
-
-      // Update profile
       if (state.profile) {
         if (name !== undefined) state.profile.name = name;
         if (bio !== undefined) state.profile.bio = bio;
         if (avatar !== undefined) state.profile.avatar = avatar;
         if (banner !== undefined) state.profile.banner = banner;
       }
-
-      // Update user
       if (state.user) {
         if (name !== undefined) state.user.name = name;
         if (bio !== undefined) state.user.bio = bio;
         if (avatar !== undefined) state.user.avatar = avatar;
         if (banner !== undefined) state.user.banner = banner;
-
-        // Update userMap
         if (state.user._id) {
           state.userMap[state.user._id] = {
             ...state.userMap[state.user._id],

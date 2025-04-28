@@ -4,9 +4,7 @@ import axios from "axios";
 import { USER_API_END_POINT } from "../utils/constant";
 import Post from "./Post";
 import toast from "react-hot-toast";
-import { FiBookmark, } from "react-icons/fi";
-import Skeleton from "react-loading-skeleton";
-import "react-loading-skeleton/dist/skeleton.css";
+import { FiBookmark } from "react-icons/fi";
 
 const Bookmarks = () => {
   const { user } = useSelector((store) => store.user);
@@ -50,25 +48,8 @@ const Bookmarks = () => {
         <div className="flex justify-center items-center gap-3 mb-8">
           <h1 className="text-3xl font-bold">Your Saved Posts</h1>
         </div>
-        
-        <div className="space-y-6">
-          {[...Array(3)].map((_, index) => (
-            <div key={index} className="bg-white dark:bg-gray-800 rounded-xl shadow p-6">
-              <div className="flex items-center mb-4">
-                <Skeleton circle width={40} height={40} />
-                <div className="ml-3">
-                  <Skeleton width={120} height={16} />
-                  <Skeleton width={80} height={12} />
-                </div>
-              </div>
-              <Skeleton count={3} />
-              <div className="mt-4 flex justify-between">
-                <Skeleton width={60} height={20} />
-                <Skeleton width={60} height={20} />
-                <Skeleton width={60} height={20} />
-              </div>
-            </div>
-          ))}
+        <div className="flex justify-center items-center py-12">
+          <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-[#048193]"></div>
         </div>
       </div>
     );

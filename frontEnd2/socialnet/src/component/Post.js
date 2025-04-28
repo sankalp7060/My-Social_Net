@@ -92,41 +92,40 @@ const Post = ({ post }) => {
     const newLikedState = !liked;
     setLiked(newLikedState);
     setLikeCount(newLikedState ? likeCount + 1 : likeCount - 1);
-  
+
     try {
       const response = await axios.put(
         `${POST_API_END_POINT}/like/${postId}`,
         { id: user._id },
-        { 
+        {
           withCredentials: true,
           headers: {
-            'Content-Type': 'application/json'
-          }
+            "Content-Type": "application/json",
+          },
         }
       );
-  
+
       if (!response.data.success) {
         throw new Error(response.data.message);
       }
       setLikeCount(response.data.likeCount);
       setLiked(response.data.liked);
-  
+
       showSuccessToast(response.data.liked ? "Post liked!" : "Post unliked");
-  
     } catch (error) {
       setLiked(!newLikedState);
       setLikeCount(newLikedState ? likeCount - 1 : likeCount + 1);
-      
+
       showErrorToast(
-        error.response?.data?.message || 
-        error.message || 
-        "Failed to update like status"
+        error.response?.data?.message ||
+          error.message ||
+          "Failed to update like status"
       );
-      
+
       console.error("Like error:", {
         error: error.response?.data || error.message,
         postId,
-        userId: user?._id
+        userId: user?._id,
       });
     }
   };

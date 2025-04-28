@@ -66,16 +66,12 @@ export const like = async (req, res) => {
   try {
     const { id: userId } = req.body;
     const postId = req.params.id;
-
-    // Basic validation
     if (!userId || !postId) {
       return res.status(400).json({ 
         success: false,
         message: "Missing user ID or post ID" 
       });
     }
-
-    // Find the post
     const post = await Post.findById(postId);
     if (!post) {
       return res.status(404).json({ 
@@ -83,19 +79,13 @@ export const like = async (req, res) => {
         message: "Post not found" 
       });
     }
-
-    // Check if user already liked the post
     const likeIndex = post.likes.indexOf(userId);
     const isLiked = likeIndex !== -1;
-
-    // Update likes array
     if (isLiked) {
-      post.likes.splice(likeIndex, 1); // Remove like
+      post.likes.splice(likeIndex, 1);
     } else {
-      post.likes.push(userId); // Add like
+      post.likes.push(userId); 
     }
-
-    // Save changes
     const updatedPost = await post.save();
 
     return res.status(200).json({
