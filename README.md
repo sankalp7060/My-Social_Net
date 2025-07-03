@@ -79,7 +79,25 @@ Make sure you have the following installed:
 - MongoDB (local or cloud-based like Atlas)
 - npm or yarn
 
-``` backEnd/ ├── controllers/ # Business logic for routes │ ├── authController.js │ ├── postController.js │ └── userController.js ├── models/ # Mongoose schemas │ ├── Post.js │ └── User.js ├── routes/ # Express route handlers │ ├── auth.js │ ├── posts.js │ └── users.js ├── middleware/ # JWT & auth middleware (if used) │ └── verifyToken.js ├── .env # Environment variables ├── server.js # Entry point of backend └── package.json ``` 
+```
+backEnd/ 
+├── controllers/
+│ ├── authController.js
+│ ├── postController.js
+│ └── userController.js
+├── models/
+│ ├── Post.js
+│ └── User.js
+├── routes/
+│ ├── auth.js
+│ ├── posts.js
+│ └── users.js
+├── middleware/
+│ └── verifyToken.js 
+├── .env # Environment variables
+├── server.js # Entry point of backend
+└── package.json
+``` 
 ---
 
 ## 🔐 Authentication
