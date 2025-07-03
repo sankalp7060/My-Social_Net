@@ -37,19 +37,7 @@
 
 ## 📁 Project Structure
 
- SocialNet/ 
- ├── frontEnd/ 
- │ ├── public/ 
- │ └── src/ 
- │ ├── components/ 
- │ ├── pages/ 
- │ └── App.js 
- ├── backEnd/ 
- │ ├── models/ 
- │ ├── routes/ 
- │ ├── controllers/ 
- │ └── server.js 
- └── README.md
+ <pre> ``` SocialNet/ ├── frontEnd/ │ ├── public/ │ └── src/ │ ├── components/ │ ├── pages/ │ └── App.js ├── backEnd/ │ ├── models/ │ ├── routes/ │ ├── controllers/ │ └── server.js └── README.md ``` </pre>
 
 
 ---
